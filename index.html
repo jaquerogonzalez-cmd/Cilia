@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cilia Beta 1.3 · Orientación auditiva</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f7f8;--card:#fff;--ink:#12303a;--mute:#5b7480;--line:#d5e2e6;--accent:#1f7a8c;--accent-ink:#fff;--user:#1f7a8c;--user-ink:#fff;--urg:#b3261e;--urg-bg:#fdecea;--rev:#8a5a00;--rev-bg:#fff4d6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1a1f;--card:#16272e;--ink:#e4eff2;--mute:#8fa8b2;--line:#2a414a;--accent:#4fb3c6;--accent-ink:#06222a;--user:#2a6f7e;--user-ink:#fff;--urg:#ff9d94;--urg-bg:#3a1b19;--rev:#ffd27a;--rev-bg:#3a2e12}}
+:root[data-theme="dark"]{--bg:#0e1a1f;--card:#16272e;--ink:#e4eff2;--mute:#8fa8b2;--line:#2a414a;--accent:#4fb3c6;--accent-ink:#06222a;--user:#2a6f7e;--user-ink:#fff;--urg:#ff9d94;--urg-bg:#3a1b19;--rev:#ffd27a;--rev-bg:#3a2e12}
+*{box-sizing:border-box}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Figtree,system-ui,sans-serif;height:100%;overflow:hidden;display:flex;flex-direction:column}
+header{flex:none;background:var(--bg);border-bottom:1px solid var(--line);padding:12px 16px}
+.hd{max-width:640px;margin:auto;display:flex;align-items:baseline;gap:10px}
+h1{font-size:20px;margin:0;font-weight:700}
+.hd span{color:var(--mute);font-size:14px}
+#bar{height:3px;background:var(--line);margin-top:10px;max-width:640px;margin-inline:auto;border-radius:2px;overflow:hidden}
+#bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+#wrap{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+#log{max-width:640px;margin:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
+.m{max-width:85%;padding:10px 14px;border-radius:16px;white-space:pre-wrap;overflow-wrap:anywhere}
+.bot{background:var(--card);border:1px solid var(--line);border-bottom-left-radius:4px;align-self:flex-start}
+.usr{background:var(--user);color:var(--user-ink);border-bottom-right-radius:4px;align-self:flex-end}
+.warn{background:var(--urg-bg);color:var(--urg);border-color:var(--urg);font-weight:500}
+#ctl{flex:none;background:var(--bg);border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px))}
+#ctl>div{max-width:640px;margin:auto;display:flex;flex-wrap:wrap;gap:8px}
+button,input{font:inherit;color:inherit}
+button{border:1px solid var(--accent);background:transparent;color:var(--accent);padding:9px 16px;border-radius:999px;cursor:pointer;text-align:left}
+button:hover{background:var(--accent);color:var(--accent-ink)}
+button.p{background:var(--accent);color:var(--accent-ink)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+input{flex:1;min-width:0;padding:10px 14px;border:1px solid var(--line);border-radius:999px;background:var(--card)}
+.rep{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto}
+.rep h2{font-size:17px;margin:0 0 4px}
+.rep h3{font-size:15px;margin:16px 0 4px;padding-bottom:3px;border-bottom:1px solid var(--line)}
+.rep dl{margin:0;display:grid;grid-template-columns:minmax(120px,40%) 1fr;gap:3px 12px;font-size:15px}
+.rep dt{color:var(--mute)}.rep dd{margin:0}
+.al{padding:8px 12px;border-radius:8px;margin:6px 0;font-size:15px}
+.U{background:var(--urg-bg);color:var(--urg)}.R{background:var(--rev-bg);color:var(--rev)}
+.note{color:var(--mute);font-size:13px}
+.by{max-width:640px;margin:10px auto 0;text-align:center;color:var(--mute);font-size:12px}
+.v{font-style:normal;font-size:11px;font-weight:700;color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:1px 8px;align-self:center}
+.back{margin-left:auto;border-color:var(--line);color:var(--mute)}
+#trp{display:none;max-width:640px;margin:auto;padding:16px}
+#trp h2{font-size:17px;margin:0 0 4px}
+.tl{padding:4px 0;white-space:pre-wrap}
+.tl.u{color:var(--accent)}
+.m,.tl,.rep dl,.al{break-inside:avoid;page-break-inside:avoid}
+.rep h3{break-after:avoid;page-break-after:avoid}
+@media print{
+:root:root:root{--bg:#fff;--card:#fff;--ink:#111;--mute:#444;--line:#bbb;--accent:#0b4f5c;--urg:#8c1d18;--urg-bg:#fdecea;--rev:#6b4500;--rev-bg:#fff4d6}
+header,#ctl{display:none}html,body{height:auto;overflow:visible}#wrap{overflow:visible}
+body.ps #log>.m{display:none}
+body.pt #wrap{display:none}body.pt #trp{display:block}}
+</style>
+</head>
+<body>
+<header><div class="hd"><h1>Cilia</h1><em class="v">Beta 1.3</em><span>Orientación auditiva y del equilibrio</span></div><div id="bar"><i></i></div></header>
+<main id="wrap"><div id="log" aria-live="polite"></div></main>
+<div id="trp"></div>
+<div id="ctl"><div id="in"></div><p class="by">by Rodrigo Jaque TM ORL</p></div>
+<script>
+const $=s=>document.querySelector(s),sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const F={alertas:[]},N="131 (SAMU)",BACK=Symbol("back");
+const YN=[["Sí",true],["No",false],["No sé",null]];
+const fmt=v=>v===true?"Sí":v===false?"No":v===null?"No sabe / No responde":(v??"N/D");
+const alerta=(n,t)=>F.alertas.push({nivel:n,detalle:t});
+const pos=()=>F.alertas.filter(a=>a.nivel==="URGENTE"&&a.detalle.startsWith("BANDERA"));
+const T=()=>F.rol==="tercero",FN={};
+const TQ={f1:"¿Notaste que dejó de escuchar de un momento a otro?",f2:"¿Notas que tiene un lado de la cara caído o débil?",f3:"¿Le cuesta hablar o entender lo que le dicen?",f4:"¿Se queja de ver doble?",f5:"¿Se queja de un dolor de cabeza muy intenso, distinto a los habituales?",f6:"¿Sufrió un golpe reciente en la cabeza?",hipo:"¿Has notado que escucha menos? (por ejemplo, sube el volumen o pide que le repitan)",tin:"¿Se queja de zumbidos, pitidos o ruidos en el oído?",ple:"¿Se queja de tener el oído tapado o lleno?",otr:"¿Has visto salir líquido, pus o sangre de su oído?",otal:"¿Se queja de dolor de oído?",fie:"¿Ha tenido fiebre en los últimos días?",mareo:"¿Has notado que pierde el equilibrio, se tambalea, se queja de mareo o se ha caído?",vfun:"¿El mareo le impide caminar solo, o lo obliga a quedarse acostado?",vdes:"¿Has notado si el mareo aparece al acostarse, levantarse rápido o mover la cabeza? (Si no lo sabes, escribe «No lo sé»)",vnau:"¿Ha tenido náuseas o vómitos con el mareo?",ini:"¿Hace cuánto notaste estos problemas? (días, meses o años)",sub:"¿Los problemas aparecieron de forma repentina, de un momento a otro?",ruido:"¿Sabes si ha estado expuesto a ruidos muy fuertes, recientemente o por su trabajo?",inf:"¿Sabes si tiene historial de infecciones frecuentes en los oídos?",cir:"¿Sabes si le han hecho alguna cirugía en los oídos?",fam:"¿Sabes si alguien en su familia directa tiene pérdida de audición importante?",med:"¿Sabes si toma algún medicamento de forma regular? Menciona antibióticos por vena, quimioterapia o aspirina en dosis altas. (Si no, escribe «Ninguno» o «No lo sé»)"};
+const ototox=["gentamicina","amikacina","vancomicina","cisplatino","quimio","intravenos","endovenos","aspirina","furosemida"];
+const norm=t=>t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+const flag=(k,q,n)=>(FN[k]=n,{k,t:"yn",q,noev:1,on:v=>{if(v===true)alerta("URGENTE","BANDERA ROJA: "+n+".");else if(v===null){if(T())alerta("REVISAR","No tiene claridad sobre: "+n+".");else if(F.rol==="yo")return"stopcog"}}});
+const rolStep=k=>({k:"rolr"+k,t:"opt",noev:1,o:["Respondo por mí","Respondo por otra persona (familiar o tercero)"],when:()=>F.rol===undefined&&Object.keys(FN).some(x=>F[x]===null),q:"Para guiarte mejor: ¿estás respondiendo por ti o por otra persona (familiar o tercero)?",on:v=>{F.rol=v.startsWith("Respondo por mí")?"yo":"tercero";const nul=Object.keys(FN).filter(x=>F[x]===null);if(F.rol==="tercero")nul.forEach(x=>alerta("REVISAR","No tiene claridad sobre: "+FN[x]+"."));else if(nul.length)return"stopcog"}});
+const sint=(k,q)=>({k,t:"yn",q});
+const mar=()=>F.mareo!==false;
+const S=[
+{k:"consent",t:"yn",yn:2,pre:"¡Hola! Soy Cilia, asistente de salud auditiva. Te haré unas preguntas breves (3 a 5 minutos) para darte recomendaciones según lo que me cuentes. No soy médico ni entrego diagnósticos.\n\nTus respuestas no se guardan ni se envían a nadie: quedan solo en tu navegador mientras usas la página.",q:"¿Aceptas continuar bajo estas condiciones?",on:v=>v!==true?"stopsin":0},
+{k:"nombre",t:"text",pre:"Empecemos por tus datos.",q:"¿Cuál es tu nombre completo?"},
+{k:"edad",t:"num",q:"¿Qué edad tienes?"},
+{k:"sexo",t:"opt",o:["Femenino","Masculino","Otro / Prefiero no decir"],q:"¿Cuál es tu sexo registrado al nacer?"},
+{k:"motivo",t:"text",noev:1,pre:"Gracias. Ahora cuéntame lo que te trae.",q:"Con tus propias palabras, ¿cuál es la molestia principal?",on:v=>{const n=nn(v);if(EVR.test(n)||FTR.test(n))F.evmot=true;
+ const d=/\bderech[oa]\b/.test(n),iz=/\bizquierd[oa]\b/.test(n),am=/\bambos\b|\bambas\b|\blos dos\b|\blos 2\b/.test(n);
+ if(!/\b(no|nada|bien|normal|pero|sin)\b/.test(n)){const L=(am||(d&&iz))?"Ambos oídos":d?"Oído derecho":iz?"Oído izquierdo":null;if(L){F.lat=L;F.latAuto=true;F.nota="Anoté que lo sientes en: "+L.toLowerCase()+"."}}}},
+{k:"fastsel",t:"opt",noev:1,when:()=>F.evmot===true,o:["Control de rutina","Revisar o calibrar mis audífonos","Mostrar resultados de exámenes","En realidad sí tengo una molestia"],q:"Entiendo. Si no tienes molestias, ¿vienes a un control de rutina, a calibrar tus audífonos o a mostrar resultados de exámenes?",on:v=>{F.fast=!v.startsWith("En realidad")}},
+{k:"motivo2",t:"text",when:()=>F.fast===false,q:"Cuéntame con tus palabras qué molestia tienes."},
+...[["f1","Ahora, unas preguntas de seguridad. ¿Has perdido la audición por completo, de un momento a otro?","Pérdida súbita de audición"],["f2","¿Sientes debilidad o caída en un lado de la cara?","Debilidad facial"],["f3","¿Tienes dificultad para hablar o para entender lo que te dicen?","Dificultad para hablar"],["f4","¿Tienes visión doble?","Visión doble"],["f5","¿Tienes un dolor de cabeza muy intenso, distinto a los que has tenido antes?","Cefalea intensa inusual"],["f6","¿Sufriste un golpe reciente en la cabeza?","Traumatismo craneal reciente"]].flatMap(([k,q,n])=>[flag(k,q,n),rolStep(k)]),
+{k:"cont",t:"yn",yn:2,when:()=>pos().length>0,pre:()=>"⚠️ Por lo que me cuentas, es importante que te evalúen cuanto antes. Te recomiendo acudir hoy a un servicio de urgencias. Si necesitas ayuda inmediata, llama al "+N+".",q:"¿Quieres que igual te dé recomendaciones generales según el resto de tus respuestas?",on:v=>{F.decision="Se te recomendó acudir a urgencias; "+(v===true?"decidiste continuar con la orientación.":"decidiste no continuar.");F.adv=true;if(v!==true)return"stop"}},
+{k:"tnom",t:"text",when:T,q:"Como respondes por otra persona: ¿cuál es el nombre de la persona?"},
+{k:"ted",t:"num",when:T,q:"¿Qué edad tiene la persona?"},
+{k:"lat",t:"opt",o:["Oído derecho","Oído izquierdo","Ambos oídos"],q:"¿En qué oído la sientes?"},
+sint("hipo","Para entender mejor lo que sientes: ¿escuchas menos?"),
+sint("tin","¿Escuchas algún zumbido, pito o ruido constante en el oído?"),
+sint("ple","¿Sientes el oído tapado o lleno?"),
+sint("otr","¿Ha salido líquido, supuración o sangre de tu oído?"),
+sint("otal","¿Tienes dolor de oído?"),
+sint("fie","¿Has tenido fiebre en los últimos días?"),
+{k:"mareo",t:"yn",q:"¿Has sentido mareos, inestabilidad o la sensación de que tú o las cosas a tu alrededor giran?"},
+{k:"vtipo",t:"opt",when:()=>mar()&&!T(),o:["Siento que todo da vueltas (giro)","Inestabilidad al caminar","Siento que me voy a desmayar","Otro / No sé describirlo"],q:"¿Cómo describirías mejor el mareo?"},
+{k:"vdur",t:"opt",when:mar,o:["Segundos","Minutos","Horas","Días","Constante","No sé decirlo"],q:"¿Cuánto dura el episodio más intenso?"},
+{k:"vfun",t:"opt",when:()=>mar()&&(T()||/No sé/.test(F.vtipo||"")||F.vdur==="No sé decirlo"),o:["Puede caminar con normalidad","Camina con dificultad o necesita apoyo","No puede caminar solo","Debe quedarse acostado"],q:"Entiendo que es difícil describirlo. ¿Este mareo te impide caminar solo, o te obliga a quedarte acostado?",on:v=>{if(/solo|acostado/.test(v))alerta("REVISAR","Mareo con impacto funcional importante: "+v+".")}},
+{k:"vfrec",t:"opt",when:mar,o:["Una sola vez","Pocas veces","Varias veces por semana","Todos los días"],q:"¿Cuántas veces te ha pasado?"},
+{k:"vdes",t:"text",when:mar,q:"¿Algo lo provoca, como acostarte, levantarte rápido o mover la cabeza? (Si no, escribe «Nada»)"},
+{k:"vnau",t:"yn",when:mar,q:"¿Vienen acompañados de náuseas o vómitos?"},
+{k:"ini",t:"text",pre:"Ahora, sobre la evolución.",q:"¿Hace cuánto comenzaron estos problemas? (días, meses o años)"},
+{k:"sub",t:"yn",q:"¿Empezó de forma repentina, de un momento a otro?",on:v=>{if(v===null)alerta("REVISAR","No sabe si el inicio fue súbito.")}},
+{k:"subd",t:"opt",when:()=>F.sub===true,o:["La pérdida de audición","El mareo","Ambos"],q:"Lo que empezó de repente, ¿fue…?",on:v=>{alerta("REVISAR","Inicio súbito en: "+v+".");if(v!=="El mareo")alerta("URGENTE","Posible hipoacusia de inicio súbito: requiere evaluación prioritaria.")}},
+{k:"ruido",t:"yn",pre:"Casi terminamos: antecedentes.",q:"¿Has estado expuesto a ruidos muy fuertes, recientemente o por tu trabajo?"},
+{k:"inf",t:"yn",q:"¿Tienes historial de infecciones frecuentes en los oídos?"},
+{k:"cir",t:"yn",q:"¿Te han hecho alguna cirugía en los oídos?"},
+{k:"fam",t:"yn",q:"¿Hay alguien en tu familia directa con pérdida de audición importante?"},
+{k:"med",t:"text",q:"¿Tomas algún medicamento de forma regular? Menciona si has recibido antibióticos por vena, quimioterapia o aspirina en dosis altas. (Si no, escribe «Ninguno»)",on:v=>{const f=ototox.filter(p=>norm(v).includes(p));if(f.length)alerta("REVISAR","Tratamientos a revisar por posible ototoxicidad (detección automática: "+f.join(", ")+").")}}
+];
+const KEEP=["consent","nombre","edad","sexo","motivo","fastsel","motivo2","cir","med"];
+S.forEach(s=>{if(!KEEP.includes(s.k)){const w=s.when;s.when=()=>!F.fast&&(!w||w())}});
+S.find(s=>s.k==="cir").pre=()=>F.fast?"Perfecto, entonces solo necesito un par de datos más.":"";
+const sk=(k,w)=>{const x=S.find(y=>y.k===k),o=x.when;x.when=()=>(!o||o())&&w()};
+sk("hipo",()=>F.f1!==true);sk("sub",()=>F.f1!==true);sk("subd",()=>F.f1!==true);sk("lat",()=>!F.latAuto);
+{const f1=S.find(x=>x.k==="f1"),o1=f1.on;f1.on=v=>{const r=o1(v);if(v===true){F.hipo=true;F.sub=true;F.subd="La pérdida de audición"}return r}}
+function msg(t,c){const d=document.createElement("div");d.className="m "+c;d.textContent=t;$("#log").append(d);const w=$("#wrap");w.scrollTo({top:w.scrollHeight,behavior:"smooth"})}
+async function say(t,c="bot"){await sleep(250);msg(t,c)}
+function ask(s,back){return new Promise(res=>{
+ const box=$("#in");box.innerHTML="";
+ const done=(v,label)=>{msg(label,"usr");box.innerHTML="";res(v)};
+ if(s.t==="yn")(s.yn===2?YN.slice(0,2):YN).forEach(([l,v])=>{const b=document.createElement("button");b.textContent=l;b.onclick=()=>done(v,l);box.append(b)});
+ else if(s.t==="opt")s.o.forEach(o=>{const b=document.createElement("button");b.textContent=o;b.onclick=()=>done(o,o);box.append(b)});
+ else{const i=document.createElement("input"),b=document.createElement("button");
+  i.type=s.t==="num"?"number":"text";i.autocomplete="off";i.placeholder=s.t==="num"?"Ej: 45":"Escribe aquí";b.textContent="Enviar";b.className="p";
+  const go=()=>{const v=i.value.trim();if(!v)return;if(s.t==="num"&&!(+v>=1&&+v<=120)){i.setCustomValidity("x");i.placeholder="Ingresa una edad entre 1 y 120";i.value="";return}done(s.t==="num"?+v:v,v)};
+  b.onclick=go;i.onkeydown=e=>{if(e.key==="Enter")go()};box.append(i,b);i.focus()}
+ if(back){const k=document.createElement("button");k.textContent="← Volver";k.className="back";k.onclick=()=>{box.innerHTML="";res(BACK)};box.append(k)}
+ setTimeout(()=>{const w=$("#wrap");w.scrollTo({top:w.scrollHeight})},0)
+})}
+const EVR=/^(no se|nose|ns|nsnc|ni idea|no lo se|nada|ninguno|ninguna|no tengo|no tengo nada|sin molestias|no tengo molestias|nada en particular)$/,EVS=/^(no se|nose|ns|nsnc|ni idea|no lo se)$/,FTR=/control|rutina|audifono|molde|examen|resultado|calibr/;
+const nn=v=>norm(String(v)).replace(/[^a-z0-9 ]/g,"").trim();
+const qtxt=s=>T()&&TQ[s.k]?TQ[s.k]:typeof s.q==="function"?s.q():s.q;
+async function run(){
+ const hist=[];let i=0,redo=false;
+ while(i<S.length){
+  const s=S[i];
+  if(s.when&&!s.when()){i++;continue}
+  $("#bar i").style.width=(i/S.length*100)+"%";
+  const snap=JSON.stringify(F);
+  const pt=s.pre&&(typeof s.pre==="function"?s.pre():s.pre);
+  if(pt&&!redo)await say(pt,s.k==="cont"?"bot warn":"bot");
+  const mark=$("#log").children.length;redo=false;
+  await say(qtxt(s));
+  const v=await ask(s,hist.length>0);
+  if(v===BACK){
+   const h=hist.pop();
+   Object.keys(F).forEach(k=>delete F[k]);Object.assign(F,JSON.parse(h.snap));
+   while($("#log").children.length>h.mark)$("#log").lastChild.remove();
+   i=h.i;redo=true;continue}
+  hist.push({i,snap,mark});
+  F[s.k]=v;
+  const r=s.on&&s.on(v);
+  if(F.nota){await say(F.nota);delete F.nota}
+  if(r==="stopsin"){await say("Entiendo. Si cambias de opinión, aquí estaré. ¡Que tengas un buen día!");return end(false)}
+  if(r==="stop"){F.interrumpido=true;await say("Entiendo. Por ahora, lo más importante es que recibas atención. Que te mejores pronto.");return end(true)}
+  if(r==="stopcog"){
+   alerta("URGENTE","Dudas sobre síntomas de alerta importantes: se recomendó pedir ayuda presencial o acudir a urgencias.");
+   F.interrumpido=true;F.nivel="Acudir hoy a urgencias o pedir ayuda presencial";
+   await say("Noto que tienes dudas sobre síntomas muy importantes. Por tu seguridad, te sugiero pedirle ayuda a alguien que esté contigo o que acudas a urgencias para una revisión presencial. Si necesitas ayuda inmediata, llama al "+N+".","bot warn");
+   return end(true)}
+  if(!s.noev&&!T()&&((s.t==="yn"&&v===null)||(s.t==="text"&&EVS.test(nn(v))))){
+   F.ev=(F.ev||0)+1;
+   if(F.ev===2)await say("Para poder orientarte mejor, necesito que me des un poco más de detalle.");
+   if(F.ev>=3){F.interrumpido=true;F.cierre="Orientación detenida: no se pudieron reunir datos suficientes por esta vía.";await say("Como no hemos podido reunir datos suficientes por esta vía, dejaremos la orientación hasta aquí. El día de tu cita, el especialista te hará estas preguntas en persona.");return end(true)}
+  }
+  i++
+ }
+ await say("¡Gracias! Con lo que me contaste, esto es lo que te recomiendo:");
+ const urg=F.alertas.some(a=>a.nivel==="URGENTE");
+ const pronto=F.sub===true||F.otr===true||F.fie===true||F.hipo===true||/solo|acostado/.test(F.vfun||"")||(mar()&&["Días","Constante"].includes(F.vdur));
+ F.nivel=urg?"Acudir hoy a un servicio de urgencias":F.fast?"Mantener tu control o cita programada con el especialista":pronto?"Consultar con un otorrinolaringólogo en los próximos días":"Agendar una consulta de control con otorrino o una audiometría cuando puedas";
+ await say("Orientación: "+F.nivel+".",urg?"bot warn":"bot");
+ if(T())await say("Estas pautas aplican a la persona por la que consultas.");
+ const t=["Evita introducir cotonitos en tus oídos: suelen empujar la cera hacia el fondo y pueden lastimar el conducto o el tímpano."];
+ if(F.fast)t.push("Lleva a tu cita tus audífonos, moldes o resultados de exámenes, y tu lista de medicamentos.");
+ else{
+  if(F.ruido!==false||F.tin!==false||F.hipo!==false)t.push("Reduce la exposición a ruidos fuertes y usa protección auditiva si no puedes evitarlos. Si usas audífonos o auriculares, mantén el volumen moderado.");
+  if(F.otr!==false||F.otal!==false)t.push("Si hay dolor o secreción (o no estás seguro), procura mantener el oído seco al bañarte.");
+  if(mar())t.push("Cambia de postura con calma y evita conducir, subir a alturas o usar escaleras sin apoyo mientras haya mareos.");
+  if(F.tin===true)t.push("El zumbido suele notarse más en silencio: un sonido ambiente suave (ventilador, música baja) puede ayudar a ratos.");
+  if(F.alertas.some(a=>a.detalle.includes("ototoxicidad")))t.push("No suspendas ningún medicamento por cuenta propia; cuéntale los tratamientos al médico que atienda.");
+  t.push("Para la consulta, lleva la lista de medicamentos y cuándo comenzaron los síntomas. Abajo puedes copiar o imprimir el resumen.");
+ }
+ t.push("Si empeora de golpe, o aparece debilidad en la cara, dificultad para hablar o pérdida brusca de audición, acude a urgencias o llama al "+N+".");
+ await say(t.map(x=>"• "+x).join("\n"));end(true)
+}
+function prn(m){
+ if(m==="pt"){const t=$("#trp");t.innerHTML="";
+  const h=document.createElement("h2");h.textContent="Conversación con Cilia";
+  const n=document.createElement("div");n.className="note";n.textContent="Generado: "+F.fecha;t.append(h,n);
+  [...$("#log").children].filter(x=>x.classList.contains("m")).forEach(x=>{const u=x.classList.contains("usr"),d=document.createElement("div"),b=document.createElement("b");d.className="tl "+(u?"u":"b");b.textContent=u?"Paciente: ":"Cilia: ";d.append(b,document.createTextNode(x.textContent));t.append(d)});
+  const f=document.createElement("p");f.className="note";f.textContent="Cilia Beta 1.3, by Rodrigo Jaque TM ORL. Orientación general: no entrega diagnósticos ni reemplaza la evaluación de un médico.";t.append(f)}
+ document.body.className=m;window.print()}
+window.onafterprint=()=>{document.body.className=""};
+function end(rep){
+ $("#bar i").style.width="100%";const box=$("#in");box.innerHTML="";
+ const nb=document.createElement("button");nb.textContent="Nueva evaluación";nb.onclick=()=>location.reload();box.append(nb);
+ if(!rep)return;
+ F.fecha=new Date().toLocaleString("es-CL");
+ const e=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+ const sec=(t,rows)=>"<h3>"+t+"</h3><dl>"+rows.map(([l,k])=>"<dt>"+l+"</dt><dd>"+e(String(fmt(F[k])))+"</dd>").join("")+"</dl>";
+ let h="<h2>Tu resumen</h2><div class='note'>Generado: "+F.fecha+"</div>"+sec("Datos",T()?[["Respondido por (tercero)","nombre"],["Paciente","tnom"],["Edad del paciente","ted"]]:[["Nombre","nombre"],["Edad","edad"],["Sexo al nacer","sexo"]])+(F.nivel?"<div class='al "+(F.nivel.startsWith("Acudir")?"U":"R")+"'><b>Orientación:</b> "+e(F.nivel)+"</div>":"")+(F.cierre?"<div class='al R'>"+e(F.cierre)+"</div>":"");
+ if(F.alertas.length){h+="<h3>Puntos a tener en cuenta</h3>"+[...F.alertas].sort((a,b)=>(a.nivel!=="URGENTE")-(b.nivel!=="URGENTE")).map(a=>"<div class='al "+a.nivel[0]+"'>"+(a.nivel==="URGENTE"?"🔴":"🟡")+" ["+a.nivel+"] "+e(a.detalle)+"</div>").join("");if(F.decision)h+="<div class='note'>"+e(F.decision)+"</div>"}
+ if(F.fast){h+=sec("Motivo de la visita",[["Relato","motivo"],["Tipo de visita","fastsel"]])+sec("Antecedentes",[["Cirugías óticas","cir"],["Medicamentos","med"]])}else if(!F.interrumpido){
+  h+=sec("Motivo de consulta",[["Relato","motivo"],["Lateralidad","lat"]])+sec("Síntomas dirigidos",[["Hipoacusia","hipo"],["Tinnitus","tin"],["Plenitud ótica","ple"],["Otorrea","otr"],["Otalgia","otal"],["Fiebre reciente","fie"]]);
+  if(F.vtipo||F.vfun)h+=sec("Bloque vestibular",[["Tipo de mareo","vtipo"],["Impacto funcional","vfun"],["Duración","vdur"],["Frecuencia","vfrec"],["Desencadenantes","vdes"],["Náuseas / vómitos","vnau"]]);
+  h+=sec("Evolución",[["Tiempo desde el inicio","ini"],["Inicio repentino","sub"]].concat(F.subd?[["Síntoma súbito","subd"]]:[]))+sec("Antecedentes y fármacos",[["Exposición a ruido","ruido"],["Infecciones frecuentes","inf"],["Cirugías óticas","cir"],["Familiares con hipoacusia","fam"],["Medicamentos","med"]])}
+ const d=document.createElement("div");d.className="rep";d.innerHTML=h+"<p class='note'>Orientación general: no entrega diagnósticos ni reemplaza la evaluación de un médico. Cilia Beta 1.3, by Rodrigo Jaque TM ORL.</p>";
+ $("#log").append(d);{const w=$("#wrap");w.scrollTo({top:d.getBoundingClientRect().top-w.getBoundingClientRect().top+w.scrollTop-8,behavior:"smooth"})}
+ const c=document.createElement("button");c.textContent="Copiar resumen";c.className="p";
+ c.onclick=async()=>{try{await navigator.clipboard.writeText(d.innerText);c.textContent="Copiado"}catch(x){c.textContent="No se pudo copiar"}};
+ const p=document.createElement("button");p.textContent="Imprimir resumen";p.onclick=()=>prn("ps");const p2=document.createElement("button");p2.textContent="Imprimir conversación";p2.onclick=()=>prn("pt");
+ box.prepend(c,p,p2)
+}
+run();
+</script>
+</body>
+</html>
